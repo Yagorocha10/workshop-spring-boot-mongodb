@@ -6,6 +6,7 @@ import com.aprendendo.workshopmongo.domain.User;
 import com.aprendendo.workshopmongo.dto.UserDTO;
 import com.aprendendo.workshopmongo.repository.PostRepository;
 import com.aprendendo.workshopmongo.repository.UserRepository;
+import com.aprendendo.workshopmongo.resources.util.URL;
 import com.aprendendo.workshopmongo.services.PostService;
 import com.aprendendo.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,17 @@ public class PostResource {
     public ResponseEntity<List<Post>> findAll() {
         return  ResponseEntity.ok(repo.findAll());
     }
+
+    @GetMapping(value = "/titlesearch")
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> list = service.findByTitle(text);
+        return ResponseEntity.ok().body(list);
+
+
+
+    }
+
 
 
 
